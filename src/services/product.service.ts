@@ -28,3 +28,7 @@ export const updateProduct = async (id: string, data: Partial<ProductDocument>) 
 export const deleteProduct = async (id: string) => {
   return ProductModel.findByIdAndDelete(id);
 };
+
+export async function findProductsByCategory(categoryId: string) {
+  return ProductModel.find({ category: categoryId }).populate('category', 'name');
+}

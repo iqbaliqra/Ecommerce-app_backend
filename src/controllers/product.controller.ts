@@ -48,3 +48,17 @@ export const deleteProductHandler = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to delete product' });
   }
 };
+export async function getProductsByCategoryHandler(req: Request, res: Response) {
+  try {
+    const { categoryId } = req.params;
+    const products = await productService.findProductsByCategory(categoryId);
+
+    if (!products.length) {
+      return res.status(404).json({ message: 'No products found for this category' });
+    }
+
+    return res.json(products);
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+}
